@@ -36,31 +36,32 @@ keymap = {0: Keycode.ONE,
           15: Keycode.ESCAPE}
 
 special_key_indexes = [3, 7, 11]
-modifier_key_indexes = [13, 14, 15]
+action_key_indexes = [13, 14, 15]
 
 rgb = (140, 0, 255)
 special_rgb = (0, 255, 200)
-modifier_rgb = (255, 157, 0)
+action_rgb = (255, 157, 0)
 
+# To prevent the strings (as opposed to single key presses) that are sent from
+# refiring on a single key press, the debounce time for the strings has to be
+# longer.
 short_debounce = 0.03
 long_debounce = 0.15
 debounce = 0.03
 fired = False
 
-# To prevent the strings (as opposed to single key presses) that are sent from
-# refiring on a single key press, the debounce time for the strings has to be
-# longer.
+for k in keymap.keys():
+    if k in special_key_indexes:
+        keys[k].set_led(*special_rgb)
+    elif k in action_key_indexes:
+        keys[k].set_led(*action_rgb)
+    else:
+        keys[k].set_led(*rgb)
+
 while True:
     keybow.update()
 
     for k in keymap.keys():
-        if k in special_key_indexes:
-            keys[k].set_led(*special_rgb)
-        elif k in modifier_key_indexes:
-            keys[k].set_led(*modifier_rgb)
-        else:
-            keys[k].set_led(*rgb)
-
         if keys[k].pressed:
             key_press = keymap[k]
 
