@@ -50,6 +50,7 @@ long_debounce = 0.15
 debounce = 0.03
 fired = False
 
+# Set the correct RGB color for each key
 for k in keymap.keys():
     if k in special_key_indexes:
         keys[k].set_led(*special_rgb)
@@ -58,6 +59,7 @@ for k in keymap.keys():
     else:
         keys[k].set_led(*rgb)
 
+# Main logic of the program
 while True:
     keybow.update()
 
